@@ -4,10 +4,6 @@
 
 Use this bot to monitor new CVEs containing defined keywords and send alerts to Slack and/or Telegram.
 
-## See it in action
-
-Join the telegram group **[peass](https://t.me/peass)** to see the bot in action and be up to date with the latest privilege escalation vulnerabilities.
-
 ## Configure one for yourself
 
 **Configuring your own BotPEASS** that notifies you about the new CVEs containing specific keywords is very easy!
