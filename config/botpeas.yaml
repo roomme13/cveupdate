@@ -107,6 +107,7 @@ PRODUCT_KEYWORDS:
 - Fortinet
 - Palo Alto
 - Putty
+- VMware
 
 # Repo's to exclude when crafting the Github CVE search URL
 GITDORK_REPO_EXCLUSIONS:
