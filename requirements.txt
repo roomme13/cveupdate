@@ -1,0 +1,6 @@
+beautifulsoup4
+discord.py
+pandas
+pyyaml
+requests
+#vulners
