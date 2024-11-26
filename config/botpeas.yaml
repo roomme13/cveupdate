@@ -73,11 +73,11 @@ PRODUCT_KEYWORDS_I:
 
 PRODUCT_KEYWORDS:
 - " AEM "
-- Adobe AEM
-- AdobeCQ
-- Adobe CQ
-- Adobe Experience Platform
-- Adobe Experience Manager
+# - Adobe AEM
+# - AdobeCQ
+# - Adobe CQ
+# - Adobe Experience Platform
+# - Adobe Experience Manager
 - Atlassian
 - Cisco
 - Citrix
