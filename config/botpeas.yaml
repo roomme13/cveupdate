@@ -8,7 +8,7 @@ ALL_VALID: no
 #   - all_cves:       every CVE in the results will be sent as a message
 #   - all_keywords:   All CVE's matching your defined keywords will be sent (including products)
 #   - products:       Only CVE's matching your defined products, but you get all of them, regardless of keywords
-SEARCH_SCOPE: all_keywords
+SEARCH_SCOPE: products
 
 # -- Include High-Severity CVE's Always --
 # Expand your search scope to also include high-severity CVE's
@@ -72,27 +72,17 @@ PRODUCT_KEYWORDS_I:
 - web application
 
 PRODUCT_KEYWORDS:
-- " AEM "
-# - Adobe AEM
-# - AdobeCQ
-# - Adobe CQ
-# - Adobe Experience Platform
-# - Adobe Experience Manager
 - Atlassian
 - Cisco
-- Citrix
 - Confluence
 - CrowdStrike
 - Docker
 - Fortinet Fortigate
-- Groovy
-- IBM HTTP
+- Fortigate
 - Juniper
-- Magento
 - Microsoft Exchange
 - Microsoft SQL
-- Netscaler
-- Pulse Secure
+- Zscaler
 - Python Django
 - Python Flask
 - Spring Boot
@@ -101,11 +91,10 @@ PRODUCT_KEYWORDS:
 - Spring Security
 - SwaggerUI
 - Symantec Endpoint
-- Tomcat
 - Trend Micro
 - VMware Horizon
 - Fortinet
-- Palo Alto
+- Palo Alto Networks
 - Putty
 - VMware
 
