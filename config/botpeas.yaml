@@ -72,25 +72,37 @@ PRODUCT_KEYWORDS_I:
 - web application
 
 PRODUCT_KEYWORDS:
-- Atlassian
-- Cisco
-- Confluence
-- CrowdStrike
-- Docker
-- Fortinet Fortigate
-- Fortigate
-- Juniper
-- Microsoft Exchange
-- Microsoft SQL
-- Zscaler
-- SwaggerUI
-- Symantec Endpoint
-- Trend Micro
-- VMware Horizon
-- Fortinet
-- Palo Alto Networks
-- Putty
-- VMware
+- Aruba Networks  
+- Atlassian  
+- ByteDance  
+- Cisco  
+- Clickup  
+- Confluence  
+- CrowdStrike  
+- Docker  
+- Forcepoint  
+- Fortinet  
+- Google  
+#- Juniper  
+- LanscopeCat  
+- Microsoft  
+#- Microsoft Exchange  
+#- Microsoft SQL  
+- Miradore  
+- Palo Alto Networks  
+- Passbolt  
+- PortSwigger  
+- Putty  
+- Slack  
+#- SwaggerUI  
+#- Symantec Endpoint  
+- Teamvault  
+#- Trend Micro  
+- VMware  
+- VMware Horizon  
+- Wazuh  
+- Zabbix  
+- Zscaler 
 
 # Repo's to exclude when crafting the Github CVE search URL
 GITDORK_REPO_EXCLUSIONS:
