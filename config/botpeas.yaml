@@ -16,8 +16,8 @@ ALL_VALID: no
 # miss a hot new CVE that just doesn't yet have a score assigned.
 #     True:         enabled
 #     threshold:    all CVE's with CVSS score equal to or higher are included
-INCLUDE_HIGH_SEVERITY: True
-HIGH_SEVERITY_THRESHOLD: 9.5
+#INCLUDE_HIGH_SEVERITY: True
+#HIGH_SEVERITY_THRESHOLD: 9.5
 
 # -- Exclude Low-Severity CVE's Always --
 # Enable including only matched keywords if CVE is also a high CVSS score (reduce noise of low-severity CVE's)
