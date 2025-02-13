@@ -1,14 +1,14 @@
 ### BotPEASS Configuration Settings
 
 # Search & Filtering Behavior
-ALL_VALID: no
+ALL_VALID: yes
 
 # Set your primary scope of CVE's to include for notifications
 # Configure this as one of: all_cves, all_keywords, products
 #   - all_cves:       every CVE in the results will be sent as a message
 #   - all_keywords:   All CVE's matching your defined keywords will be sent (including products)
 #   - products:       Only CVE's matching your defined products, but you get all of them, regardless of keywords
-#SEARCH_SCOPE: products
+SEARCH_SCOPE: products
 
 # -- Include High-Severity CVE's Always --
 # Expand your search scope to also include high-severity CVE's
@@ -16,14 +16,14 @@ ALL_VALID: no
 # miss a hot new CVE that just doesn't yet have a score assigned.
 #     True:         enabled
 #     threshold:    all CVE's with CVSS score equal to or higher are included
-#INCLUDE_HIGH_SEVERITY: True
-#HIGH_SEVERITY_THRESHOLD: 9.5
+INCLUDE_HIGH_SEVERITY: True
+HIGH_SEVERITY_THRESHOLD: 9.5
 
 # -- Exclude Low-Severity CVE's Always --
 # Enable including only matched keywords if CVE is also a high CVSS score (reduce noise of low-severity CVE's)
 # Disclaimer: If enabled, this means you will not see CVE's for which the CVSS score is currently blank
 ENABLE_SCORE_FILTERING: True
-MIN_SCORE_THRESHOLD: 7.0
+MIN_SCORE_THRESHOLD: 5.0
 
 # -- MITRE Exploit-DB -- Update dataset every 'n' days
 MITRE_INTERVAL: 3
@@ -34,37 +34,37 @@ ENABLE_EPSS_LOOKUPS: True
 # -- Exclusion Filtering --
 # If present, exclude CVE from results
 # NOTE: Case Sensitive!
-#EXCLUDED_KEYWORDS:
-#- SourceCodester
-#- Sourcecodester
-#- Reservation System 1.0
-#- Reservation-System 1.0
+EXCLUDED_KEYWORDS:
+- SourceCodester
+- Sourcecodester
+- Reservation System 1.0
+- Reservation-System 1.0
 
 # Case-insensitive keywords in CVE Description/Summary
-#DESCRIPTION_KEYWORDS_I:
-#- auth bypass
-#- authentication bypass
-#- default credentials
-#- default password
-#- deserialization
-#- sql injection
-#- privesc
-#- local file inclusion
-#- remote file inclusion
-#- remote code execution
-#- " sudo "
-#- " suid "
-#- " UAC "
-#- docker
-#- kubernetes
-#- " lxc "
+DESCRIPTION_KEYWORDS_I:
+- auth bypass
+- authentication bypass
+- default credentials
+- default password
+- deserialization
+- sql injection
+- privesc
+- local file inclusion
+- remote file inclusion
+- remote code execution
+- " sudo "
+- " suid "
+- " UAC "
+- docker
+- kubernetes
+- " lxc "
 
-#DESCRIPTION_KEYWORDS:
-#- User Account Control
-#- LFI
-#- RCE
-#- RFI
-#- SQLi
+DESCRIPTION_KEYWORDS:
+- User Account Control
+- LFI
+- RCE
+- RFI
+- SQLi
 
 PRODUCT_KEYWORDS_I:
 - kubernetes
