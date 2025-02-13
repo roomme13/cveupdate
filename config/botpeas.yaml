@@ -23,7 +23,7 @@ HIGH_SEVERITY_THRESHOLD: 9.5
 # Enable including only matched keywords if CVE is also a high CVSS score (reduce noise of low-severity CVE's)
 # Disclaimer: If enabled, this means you will not see CVE's for which the CVSS score is currently blank
 ENABLE_SCORE_FILTERING: True
-MIN_SCORE_THRESHOLD: 5.0
+MIN_SCORE_THRESHOLD: 7.0
 
 # -- MITRE Exploit-DB -- Update dataset every 'n' days
 MITRE_INTERVAL: 3
