@@ -41,30 +41,30 @@ EXCLUDED_KEYWORDS:
 - Reservation-System 1.0
 
 # Case-insensitive keywords in CVE Description/Summary
-DESCRIPTION_KEYWORDS_I:
-- auth bypass
-- authentication bypass
-- default credentials
-- default password
-- deserialization
-- sql injection
-- privesc
-- local file inclusion
-- remote file inclusion
-- remote code execution
-- " sudo "
-- " suid "
-- " UAC "
-- docker
-- kubernetes
-- " lxc "
+#DESCRIPTION_KEYWORDS_I:
+#- auth bypass
+#- authentication bypass
+#- default credentials
+#- default password
+#- deserialization
+#- sql injection
+#- privesc
+#- local file inclusion
+#- remote file inclusion
+#- remote code execution
+#- " sudo "
+#- " suid "
+#- " UAC "
+#- docker
+#- kubernetes
+#- " lxc "
 
-DESCRIPTION_KEYWORDS:
-- User Account Control
-- LFI
-- RCE
-- RFI
-- SQLi
+#DESCRIPTION_KEYWORDS:
+#- User Account Control
+#- LFI
+#- RCE
+#- RFI
+#- SQLi
 
 PRODUCT_KEYWORDS_I:
 - kubernetes
