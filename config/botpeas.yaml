@@ -1,7 +1,7 @@
 ### BotPEASS Configuration Settings
 
 # Search & Filtering Behavior
-ALL_VALID: yes
+ALL_VALID: no
 
 # Set your primary scope of CVE's to include for notifications
 # Configure this as one of: all_cves, all_keywords, products
@@ -41,7 +41,7 @@ EXCLUDED_KEYWORDS:
 - Reservation-System 1.0
 
 # Case-insensitive keywords in CVE Description/Summary
-#DESCRIPTION_KEYWORDS_I:
+DESCRIPTION_KEYWORDS_I:
 #- auth bypass
 #- authentication bypass
 #- default credentials
@@ -59,7 +59,7 @@ EXCLUDED_KEYWORDS:
 #- kubernetes
 #- " lxc "
 
-#DESCRIPTION_KEYWORDS:
+DESCRIPTION_KEYWORDS:
 #- User Account Control
 #- LFI
 #- RCE
