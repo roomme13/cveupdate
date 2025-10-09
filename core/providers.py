@@ -128,7 +128,7 @@ class CVERetrieverNVD(object):
         print("[*] Loaded config settings, search & exclusion keywords")
 
         # Load MITRE Exploit-DB Mapping Data
-        self.download_exploit_mapping()
+        # self.download_exploit_mapping()
         self.exploit_map = []
         fieldnames = ["ExploitId", "CveId"]     # The original headers of the MITRE Exploit map file
         with open(self.mitre_exploit_file, 'r') as mitre_file:
@@ -301,14 +301,17 @@ class CVERetrieverNVD(object):
         self.update_cve_settings_file()
         return self.cve_new_dataset
 
+
     def filter_cves(self):
         filtered_cves = []
         for item in self.cve_new_dataset:
             # Which method(s) are we filtering by
             if self.enable_score_filtering:
                 if not item.get('CVSSv3_Score'):
-                    # Score filtering is enabled, but this one doesn't have a score, err on side of caution and include it in results
-                    item['CVSSv3_Score'] = "TBD"
+                    # Score filtering is enabled, but this one doesn't have a score
+                    # item['CVSSv3_Score'] = "TBD"
+                    print("[INFO] Skipping CVE with no CVSS Score; too noisy")
+                    continue
                 elif not self._cvss_score_at_above(item['CVE_ID'], item['CVSSv3_Score'], self.min_score_threshold):
                     # If score filtering is enabled, and CVE is below threshold, skip it altogether
                     print(f"[INFO] Filtering out CVE (below min score threshold): {item['CVE_ID']} - {item['Description']}")
@@ -316,20 +319,20 @@ class CVERetrieverNVD(object):
 
             # Before anything, skip excluded patterns first
             if self._is_excluded_keyword_present(item['Description']):
-                print(f"[INFO] Filtering out CVE (matches an excluded keyword): {item['CVE_ID']} - {item['Description']}")
+                if DEBUG: print(f"[INFO] Filtering out CVE (matches an excluded keyword): {item['CVE_ID']} - {item['Description']}")
                 continue
 
             if self.search_scope == 'products':
                 if self._is_prod_keyword_present(item['Description']):
                     filtered_cves.append(item)
                 else:
-                    print(f"[INFO] Filtering out CVE (no matching product keywords): {item['CVE_ID']} - {item['Description']}")
+                    if DEBUG: print(f"[INFO] Filtering out CVE (no matching product keywords): {item['CVE_ID']} - {item['Description']}")
             elif self.search_scope == 'all_keywords':
                 if self._is_prod_keyword_present(item['Description']) or \
                     self._is_summ_keyword_present(item['Description']):
                     filtered_cves.append(item)
                 else:
-                    print(f"[INFO] Filtering out CVE (no matching general keywords): {item['CVE_ID']} - {item['Description']}")
+                    if DEBUG: print(f"[INFO] Filtering out CVE (no matching general keywords): {item['CVE_ID']} - {item['Description']}")
             elif self.search_scope == 'all_cves':
                 return self.cve_new_dataset
 
@@ -341,10 +344,11 @@ class CVERetrieverNVD(object):
                     else:
                         if DEBUG: print(f"[DBG] Skipping {item['CVE_ID']} because it's already in the results list")
                 else:
-                    print(f"[INFO] Filtering out CVE (no match on preferences and not a high enough severity score): {item['CVE_ID']} - {item['Description']}")
+                    if DEBUG: print(f"[INFO] Filtering out CVE (no match on preferences and not a high enough severity score): {item['CVE_ID']} - {item['Description']}")
 
         self.cve_new_dataset = filtered_cves
         return
+
 
     def _cvss_score_at_above(self, cve, cvss_score: float, threshold: float):
         val = False
@@ -357,19 +361,23 @@ class CVERetrieverNVD(object):
             if DEBUG: print("[DBG] ValueError evaluating CVSS Score to threshold, CVSS Score is: {}".format(cvss_score))
         return val
 
+
     def _is_summ_keyword_present(self, summary: str):
         """ Given the summary check if any keyword is present """
         return any(w in summary for w in self.description_keywords) or \
             any(w.lower() in summary.lower() for w in self.description_keywords_i)
+
 
     def _is_prod_keyword_present(self, products: str):
         """ Given the summary check if any keyword is present """
         return any(w in products for w in self.product_keywords) or \
             any(w.lower() in products.lower() for w in self.product_keywords_i)
 
+
     def _is_excluded_keyword_present(self, summary: str):
         """ return True if an excluded keyword is in the summary/description. """
         return any(w in summary for w in self.excluded_keywords)
+
 
     def check_cve_has_exploit(self):
         """ Search CVE's from our results to the exploit mapping to see if an Exploit-DB ID is listed. If so, add this to the dataset. """
@@ -386,8 +394,11 @@ class CVERetrieverNVD(object):
                         item['ExploitDB_ID'] = node['ExploitDB_ID']
         return
 
+
     def download_exploit_mapping(self):
         """ Retrieve the current MITRE Exploit-DB mapping dataset to use locally. """
+
+        # MITRE doesn't maintain this dataset anymore, so no sense getting new
         date_threshold = datetime.datetime.now() - datetime.timedelta(days=int(self.mitre_interval))
         if os.path.exists(self.mitre_exploit_file):
             if self.last_mitre_retrieval < date_threshold:
@@ -395,10 +406,8 @@ class CVERetrieverNVD(object):
             else:
                 if DEBUG: print("[DBG] Last MITRE data retrieval is fresh and will be used")
                 return
-        url_mitre = "https://cve.mitre.org/data/refs/refmap/source-EXPLOIT-DB.html"
-        csv_file = open(self.mitre_exploit_file, 'w')
-        csv_writer = csv.writer(csv_file)
-
+        # url_mitre = "https://cve.mitre.org/data/refs/refmap/source-EXPLOIT-DB.html"
+        url_mitre = "https://www.cve.org/Resources/Media/Archives/OldWebsite/data/refs/refmap/source-EXPLOIT-DB.html"
         response = requests.get(url_mitre, allow_redirects=True)
 
         if response.status_code == 200:
@@ -406,10 +415,14 @@ class CVERetrieverNVD(object):
         else:
             print(f"[!] Could not connect to retrieve MITRE Exploit mapping resource file, try again later")
             return
+
         # Parse the html and extract the tables we need
         soup = BS(response.text, "html.parser")
-        table = soup.find_all("table", attrs={"cellpadding": "2", "cellspacing": "2", "border": "2"})[1]
-
+        try:
+            table = soup.find_all("table", attrs={"cellpadding": "2", "cellspacing": "2", "border": "2"})[1]
+        except IndexError as e:
+            print("[!] Invalid soup query, table is empty. Skipping parsing of the online resource")
+            return
         headings = ["ExploitId", "CveId"]
         datasets = []
         for row in table.find_all("tr")[0:]:
@@ -426,6 +439,9 @@ class CVERetrieverNVD(object):
         df[headings[1]] = df[headings[1]].str.split(' ') # splitting the column based on white space within the entries
         df = df.set_index([headings[0]])[headings[1]].apply(pd.Series).stack().reset_index().drop('level_1',axis = 1).rename(columns = {0: headings[1]}) # creating multiple rows for exploits that correspond to multiple CVE #'s
 
+        csv_file = open(self.mitre_exploit_file, 'w')
+        csv_writer = csv.writer(csv_file)
+
         n = len(df[headings[1]])
         csv_writer.writerow(headings)
         for i in range(n-1):
@@ -437,9 +453,11 @@ class CVERetrieverNVD(object):
         self.last_mitre_retrieval = now.strftime(self.time_format)
         return
 
+
     def get_github_exclusions_addendum(self):
         """ From the config, send over the URL-formatted query addendum to tune all built URLs. """
         return self.gitdork_excluded_repos_string
+
 
 # NVD API Notes:
     # E.g. requests.get("https://services.nvd.nist.gov/rest/json/cves/2.0?hasKev", headers=headers)
