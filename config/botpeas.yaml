@@ -10,6 +10,10 @@ ALL_VALID: no
 #   - products:       Only CVE's matching your defined products, but you get all of them, regardless of keywords
 SEARCH_SCOPE: products
 
+#user:admin
+#password:admin
+#api token
+
 # -- Include High-Severity CVE's Always --
 # Expand your search scope to also include high-severity CVE's
 # NOTE: Out of caution, if enabled, bot will also include all CVE's for which no score exists yet, so we don't
